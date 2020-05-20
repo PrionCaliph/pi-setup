@@ -46,15 +46,28 @@ timezone () {
 
 #install uwt and usability-misc
 whonixRep () {
-    HOMEPATH=/home/$(echo ${SUDO_USER:-${USER}})
-    cd $HOMEPATH
-    echo "${CYAN}Setting up Whonix repos...${CLEAR}"
-    wget https://www.whonix.org/patrick.asc
-    sudo chown ${SUDO_USER:-${USER}}):$(echo ${SUDO_USER:-${USER}}
-    sudo apt-key --keyring /etc/apt/trusted.gpg.d/whonix.gpg add ~/patrick.asc
-    echo "deb https://deb.whonix.org buster main contrib non-free" | sudo tee /etc/apt/sources.list.d/whonix.list
-    sudo apt update -qq
-    echo "${CYAN}Whonix repos set up${CLEAR}"
+	HOMEPATH=/home/$(echo ${SUDO_USER:-${USER}})/
+	cd $HOMEPATH
+	echo -n "pwd : "; pwd
+	gpg --fingerprint
+	chmod --recursive og-rwx ~/.gnupg
+	wget https://www.whonix.org/patrick.asc
+	#gpg --keyid-format long --import --import-options show-only --with-fingerprint patrick.asc
+	OUTP=$(sudo -u ${SUDO_USER:-${USER}} gpg --keyid-format long --import --import-options show-only --with-fingerprint patrick.asc | grep fingerprint | tr -d [:space:])
+	GOODOUTP="Keyfingerprint=916B8D99C38EAF5E8ADC7A2A8D66066A2EEACCDA"
+
+
+	if [ "$OUTP" = "$GOODOUTP" ]; then echo "patrick.asc verified"
+	else echo "couldnt verify key"
+	fi
+	echo "Importing key"
+	sudo -u ${SUDO_USER:-${USER}} gpg --import ${HOMEPATH}patrick.asc
+
+	echo "Adding Whonix's signing key..." && sudo apt-key --keyring /etc/apt/trusted.gpg.d/whonix.gpg add ${HOMEPATH}patrick.asc
+
+	echo "Adding Whonix's APT repository..." && echo "deb https://deb.whonix.org buster main contrib non-free" | sudo tee /etc/apt/sources.list.d/whonix.list
+
+	#echo "Updating package lists..." && sudo apt update
 }
 
 installPack () {
