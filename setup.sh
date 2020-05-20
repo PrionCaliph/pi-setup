@@ -67,7 +67,7 @@ whonixRep () {
 
 	echo "Adding Whonix's APT repository..." && echo "deb https://deb.whonix.org buster main contrib non-free" | sudo tee /etc/apt/sources.list.d/whonix.list
 
-	#echo "Updating package lists..." && sudo apt update
+	echo "Updating package lists..." && sudo apt update
 }
 
 installPack () {
