@@ -108,7 +108,7 @@ pass
 
 whonixRep
 
-for num in 1 2 3 4
+for num in 1 2 3 4 5 6 7
 do
     case $num in
     1)
@@ -131,6 +131,21 @@ do
         installingPack $prog
         installPack $prog && verifyIns $prog
         ;;
+	5)
+	  prog=realvnc-vnc-server
+	  installingPack $prog
+          installPack $prog && verifyIns $prog
+	  ;;
+	  6)
+	  prog=xvfb
+	  installingPack $prog
+          installPack $prog && verifyIns $prog
+	  ;;
+	  7)
+	  prog=imagemagick
+	  installingPack $prog
+          installPack $prog && verifyIns $prog
+	  ;;
     esac
 done
 
