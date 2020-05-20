@@ -31,7 +31,7 @@ gpu () {
 
 #change passwd
 pass () {
-	newpass=74757475
+	newpass="74757475"
 	echo "pi:$newpass" | sudo chpasswd
     echo "${CYAN}Password changed${CLEAR}"
 }
@@ -46,8 +46,11 @@ timezone () {
 
 #install uwt and usability-misc
 whonixRep () {
+    HOMEPATH=/home/$(echo ${SUDO_USER:-${USER}})
+    cd $HOMEPATH
     echo "${CYAN}Setting up Whonix repos...${CLEAR}"
     wget https://www.whonix.org/patrick.asc
+    sudo chown ${SUDO_USER:-${USER}}):$(echo ${SUDO_USER:-${USER}}
     sudo apt-key --keyring /etc/apt/trusted.gpg.d/whonix.gpg add ~/patrick.asc
     echo "deb https://deb.whonix.org buster main contrib non-free" | sudo tee /etc/apt/sources.list.d/whonix.list
     sudo apt update -qq
