@@ -31,7 +31,7 @@ gpu () {
 
 #change passwd
 pass () {
-	newpass="74757475"
+	newpass="password"
 	echo "pi:$newpass" | sudo chpasswd
     echo "${CYAN}Password changed${CLEAR}"
 }
