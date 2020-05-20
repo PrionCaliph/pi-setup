@@ -165,7 +165,7 @@ var=$(cat /etc/hostname)
 echo "${CYAN}Hostname will be changed to: ${CLEAR}$var"
 
 
-for num in 1 2 3 4 5
+for num in 1 2 3 4 5 6 7
 do
     case $num in
     1)
@@ -185,9 +185,17 @@ do
         verifyIns $prog
         ;;
     5)
-        prog=adduser
+        prog=realvnc-vnc-server
         verifyIns $prog
         ;;
+	6)
+	prog=xvfb
+	verifyIns $prog
+	;;
+	7)
+	prog=imagemagick
+	verifyIns $prog
+	;;
     esac
 done
     
